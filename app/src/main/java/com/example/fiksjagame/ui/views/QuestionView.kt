@@ -1,4 +1,4 @@
-package com.example.fiksjagame.ui
+package com.example.fiksjagame.ui.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column

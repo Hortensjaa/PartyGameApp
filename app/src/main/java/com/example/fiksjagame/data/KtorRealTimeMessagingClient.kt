@@ -37,6 +37,12 @@ class KtorRealtimeMessagingClient(
         )
     }
 
+    override suspend fun sendCheck() {
+        session?.outgoing?.send(
+            Frame.Text("check_connection#placeholder}")
+        )
+    }
+
     override suspend fun close() {
         session?.close()
         session = null
