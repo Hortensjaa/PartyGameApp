@@ -1,7 +1,7 @@
 package com.example.fiksjagame.di
 
-import com.example.fiksjagame.data.KtorRealtimeMessagingClient
-import com.example.fiksjagame.data.RealtimeMessagingClient
+import com.example.fiksjagame.ktorClient.KtorRealtimeMessagingClient
+import com.example.fiksjagame.ktorClient.RealtimeMessagingClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

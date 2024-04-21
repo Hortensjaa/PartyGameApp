@@ -3,8 +3,7 @@ package com.example.fiksjagame.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.fiksjagame.data.GameState
-import com.example.fiksjagame.data.RealtimeMessagingClient
-import com.example.fiksjagame.data.Vote
+import com.example.fiksjagame.ktorClient.RealtimeMessagingClient
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -19,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FiksjaViewModel@Inject constructor(
-private val client: RealtimeMessagingClient
+    private val client: RealtimeMessagingClient
 ): ViewModel() {
     val state = client
         .getGameStateStream()

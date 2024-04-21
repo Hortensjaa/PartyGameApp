@@ -1,10 +1,12 @@
-package com.example.fiksjagame.data
+package com.example.fiksjagame.ktorClient
 
+import com.example.fiksjagame.data.GameState
+import com.example.fiksjagame.data.Vote
 import kotlinx.coroutines.flow.Flow
 
 interface RealtimeMessagingClient {
     fun getGameStateStream(): Flow<GameState>
-    suspend fun sendAction(action: Vote)
+    suspend fun sendVote(vote: Vote)
     suspend fun sendCheck()
     suspend fun close()
 }

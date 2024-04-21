@@ -1,6 +1,7 @@
-package com.example.fiksjagame.data
+package com.example.fiksjagame.ktorClient
 
-import android.provider.Telephony.Carriers.PORT
+import com.example.fiksjagame.data.GameState
+import com.example.fiksjagame.data.Vote
 import io.ktor.client.*
 import io.ktor.client.features.websocket.*
 import io.ktor.client.request.*
@@ -31,9 +32,9 @@ class KtorRealtimeMessagingClient(
         }
     }
 
-    override suspend fun sendAction(action: Vote) {
+    override suspend fun sendVote(vote: Vote) {
         session?.outgoing?.send(
-            Frame.Text("make_turn#${Json.encodeToString(action)}")
+            Frame.Text("vote#${Json.encodeToString(vote)}")
         )
     }
 
