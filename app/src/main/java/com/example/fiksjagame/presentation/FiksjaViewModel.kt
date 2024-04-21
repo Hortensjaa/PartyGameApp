@@ -33,7 +33,16 @@ class FiksjaViewModel@Inject constructor(
     private val _showConnectionError = MutableStateFlow(false)
     val showConnectionError = _showConnectionError.asStateFlow()
 
-    // placeholder, delete later
+    private val _playerName = MutableStateFlow("")
+    val playerName = _playerName.asStateFlow()
+
+    fun logIn(name: String) {
+        viewModelScope.launch {
+            _playerName.value = name
+            client.sendLoggedIn(name)
+        }
+    }
+
     fun checkConnection() {
         viewModelScope.launch {
             client.sendCheck()

@@ -39,6 +39,7 @@ fun QuestionView(
             contentAlignment = Alignment.Center
         ) {
             Column (
+                verticalArrangement = Arrangement.spacedBy(20.dp),
                 modifier = Modifier
                     .padding(20.dp, 30.dp)
                     .fillMaxWidth()
@@ -46,20 +47,20 @@ fun QuestionView(
                 Row (
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp)
+                    modifier = Modifier.fillMaxWidth()
                 ){
                     Text(question.header.toString(), style=MaterialTheme.typography.titleMedium)
                 }
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp)
+                    modifier = Modifier.fillMaxWidth()
                 ){
                     Text(question.text, style = MaterialTheme.typography.titleLarge)
                 }
                 LinearProgressIndicator(
                     progress = { 0.2f },
-                    modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
+                    modifier = Modifier.fillMaxWidth()
                 )
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(2),

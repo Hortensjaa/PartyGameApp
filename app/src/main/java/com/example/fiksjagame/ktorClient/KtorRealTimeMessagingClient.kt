@@ -44,6 +44,12 @@ class KtorRealtimeMessagingClient(
         )
     }
 
+    override suspend fun sendLoggedIn(name: String) {
+        session?.outgoing?.send(
+            Frame.Text("login#${name}")
+        )
+    }
+
     override suspend fun close() {
         session?.close()
         session = null

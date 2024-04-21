@@ -8,5 +8,6 @@ interface RealtimeMessagingClient {
     fun getGameStateStream(): Flow<GameState>
     suspend fun sendVote(vote: Vote)
     suspend fun sendCheck()
+    suspend fun sendLoggedIn(name: String)
     suspend fun close()
 }
