@@ -11,5 +11,7 @@ data class GameState (
     // number of votes in current question
     val votes: Map<String, Int> = emptyMap(),
     // player who had the most votes
-    val winner: String? = null
+    val winner: String? = null,
+    // latest message from server
+    val message: String? = null
 )
