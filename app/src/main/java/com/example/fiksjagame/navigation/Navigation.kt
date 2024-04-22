@@ -20,7 +20,7 @@ fun Navigation(
             LoginView(viewModel::logIn) { navController.navigate("question") }
         }
         composable(route="question") {
-            QuestionView()
+            QuestionView(state.value)
         }
     }
 }
