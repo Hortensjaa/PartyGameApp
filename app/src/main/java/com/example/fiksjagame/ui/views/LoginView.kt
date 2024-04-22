@@ -22,7 +22,8 @@ import androidx.compose.ui.unit.dp
 @Preview(name = "Phone", device = Devices.PIXEL_7_PRO, showSystemUi = true)
 @Composable
 fun LoginView(
-    loginAction: (String) -> Unit = {_: String -> }
+    loginAction: (String) -> Unit = {_: String -> },
+    navAction: () -> Unit = {}
 ) {
     var name: String by remember { mutableStateOf("") }
 
@@ -42,7 +43,10 @@ fun LoginView(
                 value = name,
                 onValueChange = { newText: String -> name = newText }
             )
-            Button(onClick = {loginAction(name)} ) {
+            Button(onClick = {
+                loginAction(name)
+                navAction()
+            } ) {
                 Text("Enter game")
             }
         }

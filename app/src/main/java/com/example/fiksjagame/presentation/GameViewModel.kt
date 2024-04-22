@@ -17,7 +17,7 @@ import java.net.ConnectException
 import javax.inject.Inject
 
 @HiltViewModel
-class FiksjaViewModel@Inject constructor(
+class GameViewModel@Inject constructor(
     private val client: RealtimeMessagingClient
 ): ViewModel() {
     val state = client
