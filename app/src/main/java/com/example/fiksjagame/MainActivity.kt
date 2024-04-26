@@ -11,7 +11,7 @@ import com.example.fiksjagame.navigation.Navigation
 import com.example.fiksjagame.presentation.GameViewModel
 import com.example.fiksjagame.ui.composables.appstates.ConnectionError
 import com.example.fiksjagame.ui.composables.appstates.Loading
-import com.example.fiksjagame.ui.theme.FiksjaGameTheme
+import com.example.fiksjagame.ui.themes.FiksjaGameTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
