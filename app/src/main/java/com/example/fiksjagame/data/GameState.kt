@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class GameState (
-    // map of pairs (player_name: has_voted_in_this_turn) e.g. {Anna: true, Bella: false, Cindy: true}
+    // map of pairs (player_name: can_vote) e.g. {Anna: true, Bella: false, Cindy: true}
     val players: Map<String, Boolean> = emptyMap(),
     // current question
     val question: Question? = null,

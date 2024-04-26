@@ -20,7 +20,11 @@ fun Navigation(
             LoginView(viewModel::logIn) { navController.navigate("question") }
         }
         composable(route="question") {
-            QuestionView(state.value)
+            QuestionView(
+                state = state.value,
+                voteAction = viewModel::vote,
+                playerName = viewModel.playerName.value
+            )
         }
     }
 }

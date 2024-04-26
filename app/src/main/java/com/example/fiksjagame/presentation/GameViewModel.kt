@@ -1,16 +1,16 @@
 package com.example.fiksjagame.presentation
 
-import androidx.lifecycle.LiveData
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.fiksjagame.data.GameState
+import com.example.fiksjagame.data.Vote
 import com.example.fiksjagame.ktorClient.RealtimeMessagingClient
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
@@ -42,6 +42,13 @@ class GameViewModel@Inject constructor(
         viewModelScope.launch {
             _playerName.value = name
             client.sendLoggedIn(name)
+        }
+    }
+
+    fun vote(vote: Vote) {
+        viewModelScope.launch {
+            client.sendVote(vote)
+            Log.d("vote","player ${_playerName.value} voted for ${vote.vote}")
         }
     }
 
