@@ -15,7 +15,11 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Devices
@@ -25,6 +29,7 @@ import com.example.fiksjagame.data.GameState
 import com.example.fiksjagame.data.Headers
 import com.example.fiksjagame.data.Question
 import com.example.fiksjagame.data.Vote
+import com.example.fiksjagame.ui.composables.WinnerDialog
 
 
 @Preview(name = "Phone", device = Devices.PIXEL_7_PRO, showSystemUi = true)
@@ -35,7 +40,7 @@ fun QuestionView(
             "Adi" to false, "Dawid" to false, "Daniel" to false, "Jula" to false,
             "Kuba"  to false, "Maja" to false, "Mati" to false, "Michał" to false,
             "Natala" to false, "Pati" to false, "Piotrek" to false),
-        question = Question(Headers.WHO, "będzie najlepszym rodzicem?")
+        question = Question(Headers.WHO, "will be the best parent?")
     ),
     playerName: String = "Jula",
     voteAction: (Vote) -> Unit = { _: Vote -> }
@@ -45,6 +50,13 @@ fun QuestionView(
         contentAlignment = Alignment.Center
     ) {
         val playersList = mutableStateOf(state.players.keys.toList())
+        val winner = state.winner
+        val winnerVotes = state.votes[winner]
+        var isShown by remember { mutableStateOf(true) }
+
+        LaunchedEffect(state.winner) {
+            isShown = state.winner != null
+        }
 
         Column (
             verticalArrangement = Arrangement.spacedBy(20.dp),
@@ -91,6 +103,13 @@ fun QuestionView(
                     }
                 }
             }
+        }
+        if (isShown && winner != null) {
+            WinnerDialog(
+                winner = winner,
+                votesNum = winnerVotes ?: -1,
+                hideAction = { isShown = false }
+            )
         }
     }
 }

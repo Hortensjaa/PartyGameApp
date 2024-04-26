@@ -10,12 +10,12 @@ data class Question (
 
 enum class Headers {
     WHO {
-        override fun toString() = "Kto..."
+        override fun toString() = "Who..."
     },
     SAY {
-        override fun toString() = "Kto by to powiedział?"
+        override fun toString() = "Who said that?"
     },
     DO {
-        override fun toString() = "Kto byłby w stanie to zrobić?"
+        override fun toString() = "Who is more likely to...?"
     },
 }

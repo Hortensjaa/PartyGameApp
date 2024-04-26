@@ -50,6 +50,5 @@ fun LoginView(
                 Text("Enter game")
             }
         }
-
     }
 }
