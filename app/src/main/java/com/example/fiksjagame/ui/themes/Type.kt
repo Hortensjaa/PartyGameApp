@@ -1,4 +1,4 @@
-package com.example.fiksjagame.ui.theme
+package com.example.fiksjagame.ui.themes
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
