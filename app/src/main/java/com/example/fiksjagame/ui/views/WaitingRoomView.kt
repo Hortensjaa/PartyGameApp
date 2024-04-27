@@ -10,6 +10,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,13 +24,19 @@ import com.example.fiksjagame.data.GameState
 fun WaitingRoomView(
     state: GameState = GameState(
         players = mapOf(
-            "Adi" to false, "Dawid" to false, "Daniel" to false, "Jula" to false,
-            "Kuba"  to false, "Maja" to false, "Michał" to false, "Piotrek" to false)
+            "Adi" to false, "Dawid" to true, "Daniel" to false, "Jula" to true,
+            "Kuba"  to false, "Maja" to false, "Michał" to true, "Piotrek" to false)
     ),
-    startGameAction: () -> Unit = {},
+    readyAction: () -> Unit = {},
     navAction: () -> Unit = {}
 ) {
     val playersList = mutableStateOf(state.players.keys.toList())
+
+    LaunchedEffect(state.gameStarted) {
+        if (state.gameStarted) {
+            navAction()
+        }
+    }
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -47,14 +54,18 @@ fun WaitingRoomView(
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 items(playersList.value) {player ->
-                    Text(player)
+                    if (state.players[player] == true) {
+                        Text("$player: not ready")
+                    } else {
+                        Text("$player: ready")
+                    }
                 }
             }
+            // game will start when all players are ready
             Button(onClick = {
-                startGameAction()
-                navAction()
+                readyAction()
             } ) {
-                Text("Start game")
+                Text("Ready")
             }
         }
     }

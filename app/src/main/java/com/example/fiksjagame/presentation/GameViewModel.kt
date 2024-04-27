@@ -1,6 +1,5 @@
 package com.example.fiksjagame.presentation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.fiksjagame.data.GameState
@@ -45,10 +44,15 @@ class GameViewModel@Inject constructor(
         }
     }
 
+    fun socketReady() {
+        viewModelScope.launch {
+            client.sendReady()
+        }
+    }
+
     fun vote(vote: Vote) {
         viewModelScope.launch {
             client.sendVote(vote)
-            Log.d("vote","player ${_playerName.value} voted for ${vote.vote}")
         }
     }
 

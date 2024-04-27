@@ -13,5 +13,7 @@ data class GameState (
     // player who had the most votes
     val winner: String? = null,
     // latest message from server
-    val message: String? = null
+    val message: String? = null,
+    // has game started (if not, players are in the waiting room)
+    val gameStarted: Boolean = false
 )
