@@ -22,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -40,7 +41,7 @@ fun QuestionView(
             "Mati", "Michał", "Natala", "Pati", "Piotrek"),
         question = Question(Headers.WHO, "will be the best parent?")
     ),
-    playerName: String = "Jula",
+    owner: String = "Jula",
     voteAction: (Vote) -> Unit = { _: Vote -> }
 ) {
     Box (
@@ -50,9 +51,21 @@ fun QuestionView(
         val winner = state.winner
         val winnerVotes = state.votes[winner]
         var isShown by remember { mutableStateOf(true) }
+        var votesLeftStr by remember { mutableStateOf("") }
 
         LaunchedEffect(state.winner) {
             isShown = state.winner != null
+        }
+
+        LaunchedEffect(state.devicesVotesLeft[owner]) {
+            val votesNum : Int = state.devicesVotesLeft[owner] ?: -1
+            if (votesNum > 1) {
+                votesLeftStr = "$votesNum votes left"
+            } else if (votesNum == 1) {
+                votesLeftStr = "1 vote left"
+            } else {
+                votesLeftStr = "No votes left"
+            }
         }
 
         Column (
@@ -61,6 +74,11 @@ fun QuestionView(
                 .padding(20.dp, 30.dp)
                 .fillMaxWidth()
         ) {
+            Text(
+                votesLeftStr,
+                style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Right,
+                modifier = Modifier.fillMaxWidth())
             Row (
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center,
@@ -68,7 +86,7 @@ fun QuestionView(
             ){
                 Text(
                     state.question?.header.toString(),
-                    style=MaterialTheme.typography.titleMedium)
+                    style = MaterialTheme.typography.titleMedium)
             }
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -91,9 +109,9 @@ fun QuestionView(
             ) {
                 items(state.players) { voteFor ->
                     Button(
-                        onClick = {voteAction(Vote(player = playerName, vote=voteFor))},
+                        onClick = {voteAction(Vote(player = owner, vote=voteFor))},
                         modifier = Modifier.padding(5.dp),
-                        enabled = (state.devicesVotesLeft[playerName] ?: 0) > 0
+                        enabled = (state.devicesVotesLeft[owner] ?: 0) > 0
                     )
                     {
                         Text(text = voteFor)

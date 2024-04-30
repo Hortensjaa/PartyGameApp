@@ -44,7 +44,7 @@ fun Navigation(
             QuestionView(
                 state = state.value,
                 voteAction = viewModel::vote,
-                playerName = viewModel.ownerName.value
+                owner = viewModel.ownerName.value
             )
         }
     }

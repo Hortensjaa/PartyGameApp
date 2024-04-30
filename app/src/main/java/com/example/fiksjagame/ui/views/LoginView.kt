@@ -46,18 +46,23 @@ fun LoginView(
             OutlinedTextField(
                 value = name,
                 onValueChange = { newText: String -> name = newText },
-                keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Words)
+                keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Words),
+                isError = name.isEmpty()
             )
-            Button(onClick = {
-                loginAction(name)
-                navToWaitingRoom()
-            } ) {
+            Button(
+                enabled = name.isNotEmpty(),
+                onClick = {
+                    loginAction(name)
+                    navToWaitingRoom()}
+            ) {
                 Text("Enter game")
             }
-            OutlinedButton(onClick = {
-                loginAction(name)
-                navToAddPlayers()
-            } ) {
+            OutlinedButton(
+                enabled = name.isNotEmpty(),
+                onClick = {
+                    loginAction(name)
+                    navToAddPlayers()}
+            ) {
                 Text("Add more players on this device")
             }
         }

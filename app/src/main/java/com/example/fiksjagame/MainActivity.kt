@@ -3,8 +3,13 @@ package com.example.fiksjagame
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
 import com.example.fiksjagame.navigation.Navigation
@@ -33,10 +38,16 @@ class MainActivity : ComponentActivity() {
                     Loading()
                 }
                 else {
-                    Navigation(
-                        navController = navController,
-                        viewModel = viewModel
-                    )
+                    Scaffold {
+                        paddingValues ->
+                        Box(modifier = Modifier.fillMaxWidth().padding(paddingValues)) {
+                            Navigation(
+                                navController = navController,
+                                viewModel = viewModel
+                            )
+                        }
+                    }
+
                 }
             }
         }
