@@ -34,19 +34,27 @@ class GameViewModel@Inject constructor(
     private val _showConnectionError = MutableStateFlow(false)
     val showConnectionError = _showConnectionError.asStateFlow()
 
-    private val _playerName = MutableStateFlow("")
-    val playerName = _playerName.asStateFlow()
+    private val _ownerName = MutableStateFlow("")
+    val ownerName = _ownerName.asStateFlow()
 
     fun logIn(name: String) {
         viewModelScope.launch {
-            _playerName.value = name
+            _ownerName.value = name
             client.sendLoggedIn(name)
         }
     }
 
     fun socketReady() {
         viewModelScope.launch {
-            client.sendReady()
+            client.sendReady(_ownerName.value)
+        }
+    }
+
+    fun addPlayers(names: List<String>) {
+        val players = mutableListOf(ownerName.value)
+        players.addAll(names.filter { e -> e != "" })
+        viewModelScope.launch {
+            client.sendAddPlayers(players)
         }
     }
 

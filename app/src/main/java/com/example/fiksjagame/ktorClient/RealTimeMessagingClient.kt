@@ -9,6 +9,7 @@ interface RealtimeMessagingClient {
     suspend fun sendVote(vote: Vote)
     suspend fun sendCheck()
     suspend fun sendLoggedIn(name: String)
-    suspend fun sendReady()
+    suspend fun sendAddPlayers(names: List<String>)
+    suspend fun sendReady(owner: String)
     suspend fun close()
 }

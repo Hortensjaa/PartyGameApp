@@ -23,14 +23,12 @@ import com.example.fiksjagame.data.GameState
 @Composable
 fun WaitingRoomView(
     state: GameState = GameState(
-        players = mapOf(
-            "Adi" to false, "Dawid" to true, "Daniel" to false, "Jula" to true,
-            "Kuba"  to false, "Maja" to false, "Michał" to true, "Piotrek" to false)
+        devicesVotesLeft = mapOf("Adi" to 0, "Dawid" to 1, "Jula" to 2,"Piotrek" to 1)
     ),
     readyAction: () -> Unit = {},
     navAction: () -> Unit = {}
 ) {
-    val playersList = mutableStateOf(state.players.keys.toList())
+    val devicesList = mutableStateOf(state.devicesVotesLeft.keys.toList())
 
     LaunchedEffect(state.gameStarted) {
         if (state.gameStarted) {
@@ -53,11 +51,11 @@ fun WaitingRoomView(
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                items(playersList.value) {player ->
-                    if (state.players[player] == true) {
-                        Text("$player: not ready")
+                items(devicesList.value) {player ->
+                    if (state.devicesVotesLeft[player] == 0) {
+                        Text("$player's device: ready")
                     } else {
-                        Text("$player: ready")
+                        Text("$player' device: not ready")
                     }
                 }
             }

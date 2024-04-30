@@ -36,10 +36,8 @@ import com.example.fiksjagame.ui.composables.WinnerDialog
 @Composable
 fun QuestionView(
     state: GameState = GameState(
-        players = mapOf(
-            "Adi" to false, "Dawid" to false, "Daniel" to false, "Jula" to false,
-            "Kuba"  to false, "Maja" to false, "Mati" to false, "Michał" to false,
-            "Natala" to false, "Pati" to false, "Piotrek" to false),
+        players = listOf("Adi", "Dawid", "Daniel", "Jula", "Kuba", "Maja",
+            "Mati", "Michał", "Natala", "Pati", "Piotrek"),
         question = Question(Headers.WHO, "will be the best parent?")
     ),
     playerName: String = "Jula",
@@ -49,7 +47,6 @@ fun QuestionView(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        val playersList = mutableStateOf(state.players.keys.toList())
         val winner = state.winner
         val winnerVotes = state.votes[winner]
         var isShown by remember { mutableStateOf(true) }
@@ -92,11 +89,11 @@ fun QuestionView(
                     .fillMaxWidth()
                     .padding(vertical = 20.dp)
             ) {
-                items(playersList.value) { voteFor ->
+                items(state.players) { voteFor ->
                     Button(
                         onClick = {voteAction(Vote(player = playerName, vote=voteFor))},
                         modifier = Modifier.padding(5.dp),
-                        enabled = state.players[playerName] ?: false
+                        enabled = (state.devicesVotesLeft[playerName] ?: 0) > 0
                     )
                     {
                         Text(text = voteFor)

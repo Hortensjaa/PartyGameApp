@@ -28,6 +28,7 @@ class KtorRealtimeMessagingClient(
     override fun getGameStateStream(): Flow<GameState> {
         return flow {
             session = client.webSocketSession {
+//                url("ws://192.168.136.30:8080/play")
                 url("ws://192.168.1.35:8080/play")
 //                url("ws://192.168.1.31:8080/play")
             }
@@ -47,9 +48,15 @@ class KtorRealtimeMessagingClient(
         )
     }
 
-    override suspend fun sendReady() {
+    override suspend fun sendAddPlayers(names: List<String>) {
         session?.outgoing?.send(
-            Frame.Text("ready#placeholder")
+            Frame.Text("add#${Json.encodeToString(names)}")
+        )
+    }
+
+    override suspend fun sendReady(owner: String) {
+        session?.outgoing?.send(
+            Frame.Text("ready#$owner")
         )
     }
 
