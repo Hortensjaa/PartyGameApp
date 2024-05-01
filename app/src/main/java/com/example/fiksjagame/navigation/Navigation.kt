@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import com.example.fiksjagame.presentation.GameViewModel
 import com.example.fiksjagame.ui.views.AddPlayersView
 import com.example.fiksjagame.ui.views.LoginView
+import com.example.fiksjagame.ui.views.MenuView
 import com.example.fiksjagame.ui.views.QuestionView
 import com.example.fiksjagame.ui.views.WaitingRoomView
 
@@ -17,8 +18,14 @@ fun Navigation(
     viewModel: GameViewModel
 ){
     val state = viewModel.state.collectAsState()
-    NavHost(navController = navController, startDestination = "login") {
-        // entry login screen
+    NavHost(navController = navController, startDestination = "menu") {
+        // login screen
+        composable(route = "menu") {
+            MenuView(
+                navToGame = { navController.navigate("login") }
+            )
+        }
+        // login screen
         composable(route = "login") {
             LoginView(
                 loginAction = viewModel::logIn,
