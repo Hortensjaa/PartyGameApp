@@ -21,7 +21,7 @@ import androidx.compose.ui.window.Dialog
 @Preview(name = "Phone", device = Devices.PIXEL_7_PRO, showSystemUi = true)
 @Composable
 fun WinnerDialog(
-    winner: String = "Winner",
+    winner: List<String> = listOf("Winner"),
     votesNum: Int = 5,
     hideAction: () -> Unit = {}
 ){
@@ -41,10 +41,10 @@ fun WinnerDialog(
                     .padding(vertical = 40.dp, horizontal = 20.dp)
             ) {
                 Text(
-                    text = "The winner is...",
+                    text = if (winner.size <= 1) "The winner is..." else "It is a draw!",
                     style = MaterialTheme.typography.titleMedium)
                 Text(
-                    text = winner,
+                    text = winner.joinToString(),
                     style = MaterialTheme.typography.titleLarge)
                 Text(
                     text = "with $votesNum votes",

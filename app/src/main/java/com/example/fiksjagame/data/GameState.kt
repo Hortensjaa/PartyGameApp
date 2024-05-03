@@ -9,7 +9,7 @@ data class GameState (
     val devicesVotesLeft: Map<String, Int> = emptyMap(),
     val question: Question? = null,
     val votes: Map<String, Int> = emptyMap(),
-    val winner: String? = null,
+    val winner: List<String> = emptyList(),
     val message: String? = null,
     val gameStarted: Boolean = false
 )

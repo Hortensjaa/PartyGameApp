@@ -49,12 +49,11 @@ fun QuestionView(
         contentAlignment = Alignment.Center
     ) {
         val winner = state.winner
-        val winnerVotes = state.votes[winner]
         var isShown by remember { mutableStateOf(true) }
         var votesLeftStr by remember { mutableStateOf("") }
 
         LaunchedEffect(state.winner) {
-            isShown = state.winner != null
+            isShown = state.winner != emptyList<String>()
         }
 
         LaunchedEffect(state.devicesVotesLeft[owner]) {
@@ -119,12 +118,11 @@ fun QuestionView(
                 }
             }
         }
-        if (isShown && winner != null) {
+        if (isShown && winner != emptyList<String>()) {
             WinnerDialog(
                 winner = winner,
-                votesNum = winnerVotes ?: -1,
-                hideAction = { isShown = false }
-            )
+                votesNum = state.votes[winner[0]] ?: -1
+            ) { isShown = false }
         }
     }
 }

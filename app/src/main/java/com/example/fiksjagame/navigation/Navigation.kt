@@ -19,7 +19,7 @@ fun Navigation(
 ){
     val state = viewModel.state.collectAsState()
     NavHost(navController = navController, startDestination = "menu") {
-        // login screen
+        // main screen
         composable(route = "menu") {
             MenuView(
                 navToGame = { navController.navigate("login") }
