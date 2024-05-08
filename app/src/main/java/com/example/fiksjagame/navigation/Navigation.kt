@@ -50,8 +50,9 @@ fun Navigation(
         composable(route="question") {
             QuestionView(
                 state = state.value,
+                owner = viewModel.ownerName.value,
                 voteAction = viewModel::vote,
-                owner = viewModel.ownerName.value
+                endTurnAction = viewModel::endTurn
             )
         }
     }

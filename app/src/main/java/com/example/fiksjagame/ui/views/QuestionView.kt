@@ -31,6 +31,7 @@ import com.example.fiksjagame.data.Headers
 import com.example.fiksjagame.data.Question
 import com.example.fiksjagame.data.Vote
 import com.example.fiksjagame.ui.composables.WinnerDialog
+import kotlinx.coroutines.delay
 
 
 @Preview(name = "Phone", device = Devices.PIXEL_7_PRO, showSystemUi = true)
@@ -42,28 +43,40 @@ fun QuestionView(
         question = Question(Headers.WHO, "will be the best parent?")
     ),
     owner: String = "Jula",
-    voteAction: (Vote) -> Unit = { _: Vote -> }
+    voteAction: (Vote) -> Unit = { _: Vote -> },
+    endTurnAction: () -> Unit = {}
 ) {
     Box (
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
+        val turnTime = 60
         val winner = state.winner
         var isShown by remember { mutableStateOf(true) }
         var votesLeftStr by remember { mutableStateOf("") }
+        var timeLeft by remember { mutableStateOf(turnTime) }
+
+        LaunchedEffect(timeLeft) {
+            while (timeLeft > 0) {
+                delay(1000L)
+                timeLeft--
+            }
+            endTurnAction()
+        }
 
         LaunchedEffect(state.winner) {
             isShown = state.winner != emptyList<String>()
+            timeLeft = turnTime
         }
 
         LaunchedEffect(state.devicesVotesLeft[owner]) {
             val votesNum : Int = state.devicesVotesLeft[owner] ?: -1
-            if (votesNum > 1) {
-                votesLeftStr = "$votesNum votes left"
+            votesLeftStr = if (votesNum > 1) {
+                "$votesNum votes left"
             } else if (votesNum == 1) {
-                votesLeftStr = "1 vote left"
+                "1 vote left"
             } else {
-                votesLeftStr = "No votes left"
+                "No votes left"
             }
         }
 
@@ -73,6 +86,7 @@ fun QuestionView(
                 .padding(20.dp, 30.dp)
                 .fillMaxWidth()
         ) {
+            Text(text = timeLeft.toString())
             Text(
                 votesLeftStr,
                 style = MaterialTheme.typography.bodyMedium,
@@ -97,7 +111,7 @@ fun QuestionView(
                     style = MaterialTheme.typography.titleLarge)
             }
             LinearProgressIndicator(
-                progress = { 0.2f },
+                progress = { (timeLeft.toFloat() / 60) },
                 modifier = Modifier.fillMaxWidth()
             )
             LazyVerticalGrid(
@@ -121,7 +135,7 @@ fun QuestionView(
         if (isShown && winner != emptyList<String>()) {
             WinnerDialog(
                 winner = winner,
-                votesNum = state.votes[winner[0]] ?: -1
+                votesNum = state.votes[winner[0]] ?: 0
             ) { isShown = false }
         }
     }

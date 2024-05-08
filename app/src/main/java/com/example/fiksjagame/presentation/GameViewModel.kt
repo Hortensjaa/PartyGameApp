@@ -70,6 +70,12 @@ class GameViewModel@Inject constructor(
         }
     }
 
+    fun endTurn() {
+        viewModelScope.launch {
+            client.sendEndTurn(ownerName.value)
+        }
+    }
+
     override fun onCleared() {
         super.onCleared()
         viewModelScope.launch {
