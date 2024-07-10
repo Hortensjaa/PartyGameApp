@@ -29,7 +29,8 @@ class KtorRealtimeMessagingClient(
         return flow {
             session = client.webSocketSession {
 //                url("ws://192.168.167.30:8080/play")
-                url("ws://192.168.1.35:8080/play")
+                url("ws://192.168.1.15:8080/play")
+//                url("ws://192.168.1.35:8080/play")
 //                url("ws://192.168.1.31:8080/play")
             }
             val gameStates = session!!

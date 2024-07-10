@@ -18,4 +18,7 @@ enum class Headers {
     DO {
         override fun toString() = "Who is more likely to...?"
     },
+    TRAIT {
+        override fun toString() = "Who is this term most suitable for?"
+    },
 }
